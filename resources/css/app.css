@@ -1,0 +1,9 @@
+@import "tailwindcss";
+@import "./styles.css";
+
+[x-cloak] {
+    display: none !important;
+}
+
+
+@source "../../resources/views/**/*.blade.php";
