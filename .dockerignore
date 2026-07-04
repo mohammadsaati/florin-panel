@@ -16,3 +16,4 @@ docker-compose*.yml
 _ide_*
 .phpstorm*
 ./vendor
+./node_modules
