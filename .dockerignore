@@ -1,0 +1,17 @@
+docker/
+!docker/entrypoint.sh
+*/production/*.yml
+*/production/*/*.yml
+*/stage/*.yml
+*/stage/*/*.yml
+*/Dockerfile
+
+*.md
+docker-compose*.yml
+
+.git/
+.github/
+.env*
+.git*
+_ide_*
+.phpstorm*
