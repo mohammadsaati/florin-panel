@@ -26,6 +26,8 @@ services:
       - ./docker/nginx/entrypoint.sh:/entrypoint.sh
       - ./docker/nginx/ssl:/etc/nginx/ssl:ro
     entrypoint: ["/bin/sh", "/entrypoint.sh"]
+    environment:
+        SSL_ENABLED: "${SSL_ENABLED:-false}"
 
     networks:
       - application-network
