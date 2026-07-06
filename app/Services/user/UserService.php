@@ -31,10 +31,8 @@ class UserService implements UserServiceInterface
             UserAddress::createForUser($user->id, $data->address);
         }
 
-        $fullName = $user->first_name . ' ' . $user->last_name;
-
         SendWellcomSmsJob::dispatch(
-            $fullName,
+            $user->first_name,
             $user->referral_code,
             $user->mobile,
         );
@@ -85,7 +83,7 @@ class UserService implements UserServiceInterface
                  */
             action: function (Collection $users) {
                 $users->each(function (User $user) {
-                   SendBirthDaySmsJob::dispatch($user->getName(), $user->mobile);
+                   SendBirthDaySmsJob::dispatch($user->first_name, $user->mobile);
                 });
             }
         );
