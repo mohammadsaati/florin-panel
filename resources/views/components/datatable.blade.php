@@ -1,4 +1,4 @@
-<div id="{{ $tableId }}" class="card">
+<div id="{{ $table_id }}" class="card">
 
     {{-- Header --}}
     @if($title || $description || isset($actions))
