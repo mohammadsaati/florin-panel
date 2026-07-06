@@ -9,7 +9,7 @@ use Illuminate\View\Component;
 
 class DataTable extends Component
 {
-    public string $tableId;
+    public string $tableId = '';
 
     public function __construct(
         public ?string $title = null,
