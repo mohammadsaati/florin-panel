@@ -37,6 +37,7 @@ class UserTable extends Component
 
     public function render(): View
     {
+        dd(333333);
         return view('livewire.admin.tables.user-table', [
             'users' => $this->userService->filter(new UserFilterData(
                 search: $this->search,
