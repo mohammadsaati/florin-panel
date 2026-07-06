@@ -12,6 +12,40 @@ services:
     networks:
       - application-network
 
+  panel_horizon:
+    container_name: admin_panel_horizon
+    build:
+        context: .
+        dockerfile: docker/Dockerfile
+    working_dir: /var/www
+    command: ["php", "artisan", "horizon"]
+    volumes:
+        - .:/var/www
+        - .env:/var/www/.env:ro
+    depends_on:
+        - admin_redis
+        - mysql
+    networks:
+        - application-network
+    restart: unless-stopped
+
+  panel_scheduler:
+      container_name: admin_panel_scheduler
+      build:
+         context: .
+         dockerfile: docker/Dockerfile
+      working_dir: /var/www
+      command: ["php", "artisan", "schedule:work"]
+      volumes:
+          - .:/var/www
+          - .env:/var/www/.env:ro
+      depends_on:
+          - admin_redis
+          - mysql
+      networks:
+          - application-network
+      restart: unless-stopped
+
   admin_panel_nginx:
     image: nginx:stable-alpine
     container_name: admin_panel_nginx
@@ -61,7 +95,7 @@ services:
     networks:
       - application-network
 
-  redis:
+  admin_redis:
     image: docker.arvancloud.ir/redis
     container_name: redis_db
     volumes:

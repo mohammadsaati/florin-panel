@@ -5,7 +5,7 @@ namespace App\Jobs;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 
-class SendBirthDaySmsJob implements ShouldQueue
+class SendWellcomSmsJob implements ShouldQueue
 {
     use Queueable;
 
@@ -14,7 +14,8 @@ class SendBirthDaySmsJob implements ShouldQueue
      */
     public function __construct(
         public string $fullName,
-        public string $phone,
+        public string $referralCode,
+        public string $mobile,
     ) {
     }
 
@@ -24,12 +25,12 @@ class SendBirthDaySmsJob implements ShouldQueue
     public function handle(): void
     {
         send_sms_with_Max_sms(
-            pattern: 'florin-birthday',
-            phone: $this->phone,
+            pattern: 'florin-wellcom',
+            phone: $this->mobile,
             extra: [
-                'name' => $this->fullName,
-            ],
-            headNumber: '10001'
+                'full_name' => $this->fullName,
+                'referral_code' => $this->referralCode,
+            ]
         );
     }
 }

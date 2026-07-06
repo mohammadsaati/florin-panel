@@ -15,4 +15,6 @@ interface UserServiceInterface
     public function create(CreateData $data): User;
 
     public function generateReferralCode(): string;
+
+    public function checkUsersBirthday(): void;
 }

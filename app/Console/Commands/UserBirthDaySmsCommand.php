@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Jobs\SendBirthDaySmsJob;
+use App\Services\Contracts\UserServiceInterface;
 use Illuminate\Console\Attributes\Description;
 use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
@@ -17,9 +17,8 @@ class UserBirthDaySmsCommand extends Command
     /**
      * Execute the console command.
      */
-    public function handle(): void
+    public function handle(UserServiceInterface $userService): void
     {
-
-        SendBirthDaySmsJob::dispatch()->delay(now()->addSeconds(2));
+        $userService->checkUsersBirthday();
     }
 }

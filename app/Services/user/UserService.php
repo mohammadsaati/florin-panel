@@ -6,10 +6,13 @@ use App\DTO\filter\UserFilterData;
 use App\DTO\user\CreateData;
 use App\Exceptions\InvalidPasswordException;
 use App\Exceptions\UserNotFoundException;
+use App\Jobs\SendBirthDaySmsJob;
+use App\Jobs\SendWellcomSmsJob;
 use App\Models\User;
 use App\Models\UserAddress;
 use App\Services\Contracts\UserServiceInterface;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -27,6 +30,14 @@ class UserService implements UserServiceInterface
         if ($data->address !== null) {
             UserAddress::createForUser($user->id, $data->address);
         }
+
+        $fullName = $user->first_name . ' ' . $user->last_name;
+
+        SendWellcomSmsJob::dispatch(
+            $fullName,
+            $user->referral_code,
+            $user->mobile,
+        );
 
         return $user;
     }
@@ -63,5 +74,20 @@ class UserService implements UserServiceInterface
         }
 
         return $user;
+    }
+
+
+    public function checkUsersBirthday(): void
+    {
+        User::checkTodayBirthDates(
+                /**
+                 * @param Collection<int, User> $users
+                 */
+            action: function (Collection $users) {
+                $users->each(function (User $user) {
+                   SendBirthDaySmsJob::dispatch($user->getName(), $user->mobile);
+                });
+            }
+        );
     }
 }

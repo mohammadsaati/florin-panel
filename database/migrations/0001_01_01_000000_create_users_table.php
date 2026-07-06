@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('mobile')->index()->unique();
-            $table->string('birth_date');
+            $table->date('birth_date');
             $table->string('gender');
             $table->string('invited_by')->index()->nullable();
             $table->integer('age')->nullable();

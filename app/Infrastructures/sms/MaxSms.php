@@ -18,7 +18,7 @@ class MaxSms implements SmsSenderInterface
     public function setConfigs(): void
     {
         $this->apiKey = config('sms.max-sms.api-key');
-        $this->baseUrl = config('sms.max-sms.baseUrl');
+        $this->baseUrl = config('sms.max-sms.base-url');
     }
 
 
@@ -36,7 +36,7 @@ class MaxSms implements SmsSenderInterface
                     'Authorization' => "bearer " . $this->apiKey,
                 ])
                 ->post(
-                    url: $this->baseUrl . '/api/v1/sms/pattern',
+                    url: $this->baseUrl . '/sms/pattern',
                     data: [
                         'pattern' => $pattern,
                         'variables' => $extra,
@@ -45,7 +45,14 @@ class MaxSms implements SmsSenderInterface
                     ]
                 )->wait();
 
-            $response->throw();
+            if ($response->failed()) {
+                Log::warning(
+                    message: 'max sms response failed',
+                    context: [
+                        'response' => $response->json(),
+                    ]
+                );
+            }
 
 
         } catch (\Throwable $th) {

@@ -43,7 +43,7 @@ if (!function_exists('send_sms_with_Max_sms'))
     /**
      * @param array<string, mixed> $extra
      */
-    function send_sms_with_Max_sms(string $pattern, string $phone, string $headNumber, array $extra): void
+    function send_sms_with_Max_sms(string $pattern, string $phone, array $extra, string $headNumber = '10002'): void
     {
         SmsSender::send(
             provider: SendSmsEnum::MAX_SMS,

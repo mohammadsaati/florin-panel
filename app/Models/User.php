@@ -7,6 +7,7 @@ use App\DTO\user\CreateData;
 use App\Enums\UserGenderEnum;
 use App\Enums\UserStatusEnum;
 use App\Enums\UserTypeEnum;
+use Closure;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
@@ -143,5 +144,13 @@ class User extends Authenticatable
     {
         return self::query()
             ->ofPhoneNumber($phone)->first();
+    }
+
+
+    public static function checkTodayBirthDates(Closure $action): bool
+    {
+        return self::query()
+            ->whereDate('birth_date', '=', date('Y-m-d'))
+            ->chunk(200, $action);
     }
 }
