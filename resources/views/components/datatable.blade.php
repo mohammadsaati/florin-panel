@@ -1,6 +1,3 @@
-@php
-    dd($component ?? null);
-@endphp
 <div id="{{ $tableId }}" class="card">
 
     {{-- Header --}}

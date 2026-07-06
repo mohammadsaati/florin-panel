@@ -34,7 +34,7 @@
 
     </div>
 
-    <x-datatable title="لیست کاربران">
+    <x-data-table title="لیست کاربران">
         <x-slot:actions>
             <x-button href="{{ route('users.create') }}" size="sm" icon="ki-filled ki-user-edit">کاربر جدید</x-button>
         </x-slot:actions>
@@ -91,7 +91,7 @@
                 </td>
             </tr>
         @endforelse
-    </x-datatable>
+    </x-data-table>
 
 
 </div>
