@@ -16,7 +16,7 @@ class DataTable extends Component
         public ?string $description = null,
         ?string $id = null,
     ) {
-        dd('DataTable constructor');
+
         $this->tableId = $id ?? 'dt_' . Str::random(8);
     }
 
