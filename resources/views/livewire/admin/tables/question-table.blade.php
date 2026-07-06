@@ -3,7 +3,7 @@
 @endphp
 
 <div>
-    <x-datatable title="لیست سوالات">
+    <x-data-table title="لیست سوالات">
         <x-slot:actions>
             <x-button href="{{ route('questions.create') }}" size="sm" icon="ki-filled ki-user-edit">سوال جدید</x-button>
         </x-slot:actions>
@@ -40,5 +40,5 @@
                 </td>
             </tr>
         @endforelse
-    </x-datatable>
+    </x-data-table>
 </div>
