@@ -130,9 +130,6 @@ class DataTable extends Component
 
     public function render(): View|Closure|string
     {
-        dd($this->tableId);
-        return view('components.datatable', [
-            'table_id' => $this->tableId,
-        ]);
+        return view('components.datatable');
     }
 }
