@@ -42,9 +42,13 @@ class AuthController extends Controller
             Auth::guard('admin')->login($user);
 
             return redirect()->route('dashboard');
-        } catch (UserNotFoundException | InvalidPasswordException) {
+        } catch (UserNotFoundException) {
             throw ValidationException::withMessages([
-                'errors' => [trans('auth.failed')],
+                'phone' => [trans('auth.failed')],
+            ]);
+        } catch (InvalidPasswordException) {
+            throw ValidationException::withMessages([
+                'password' => [trans('auth.password')],
             ]);
         }
     }

@@ -128,7 +128,7 @@ class User extends Authenticatable
             'invited_by'    => $data->invited_by,
             'type'          => $data->type->value,
             'status'        => $data->status->value,
-            'password'      => $data->password,
+            'password'      => !empty($data->password) ? $data->password : null,
         ]);
     }
 
