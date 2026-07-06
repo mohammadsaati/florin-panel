@@ -3,6 +3,7 @@
 @endphp
 
 <div>
+    @dd(32423)
     <div class="flex flex-wrap items-end gap-4 px-5 py-4 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 rounded-t-xl">
 
         <input type="hidden" value="{{ request()->get('user_id') }}" wire:model.live.debounce.300ms="user_id">
