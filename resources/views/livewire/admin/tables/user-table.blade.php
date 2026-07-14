@@ -42,6 +42,7 @@
         <x-slot:head>
             <x-datatable-heading class="w-16">#</x-datatable-heading>
             <x-datatable-heading>نام کاربر</x-datatable-heading>
+            <x-datatable-heading>تاریخ تولد</x-datatable-heading>
             <x-datatable-heading>شماره</x-datatable-heading>
             <x-datatable-heading>کد دعوت</x-datatable-heading>
             <x-datatable-heading>دعوت شده توسط</x-datatable-heading>
@@ -52,6 +53,7 @@
             <tr class="border-b border-gray-100 dark:border-gray-700/50 hover:bg-primary/5 transition-colors">
                 <x-datatable-column :item="$user" field="id" class="text-gray-400 font-mono" />
                 <td>{{ $user->getName() }}</td>
+                <td>{{ convert_carbon_to_jalali($user->birth_date) }}</td>
                 <x-datatable-column :item="$user" field="mobile"/>
                 <x-datatable-column :item="$user" field="referral_code"/>
                 <td>

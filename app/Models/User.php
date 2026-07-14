@@ -109,6 +109,7 @@ class User extends Authenticatable
                     ->orWhere('last_name', 'like', '%' . $filter->search . '%')
                     ->orWhere('mobile', 'like', '%' . $filter->search . '%');
             })
+            ->orderBy('id', 'desc')
             ->simplePaginate(
                 perPage: $filter->per_page,
                 page: $filter->page,
