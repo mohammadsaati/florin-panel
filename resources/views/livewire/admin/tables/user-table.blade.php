@@ -93,6 +93,15 @@
                 </td>
             </tr>
         @endforelse
+        <x-slot:pagination>
+            <span class="text-sm text-gray-500">
+                @if($users->firstItem())
+                    نمایش {{ $users->firstItem() }}–{{ $users->lastItem() }} از {{ $users->total() }}
+                @endif
+            </span>
+            {{ $users->onEachSide(1)->links('pagination::simple-tailwind') }}
+        </x-slot:pagination>
+
     </x-data-table>
 
 
