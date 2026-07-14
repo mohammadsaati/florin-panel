@@ -26,7 +26,7 @@ class UserTable extends Component
     public string $invited_by = '';
 
     public array $perPageOptions = [10, 15, 25, 50, 100];
-    public int $perPage = 15;
+    public int $perPage = 10;
 
     private UserServiceInterface $userService;
 
