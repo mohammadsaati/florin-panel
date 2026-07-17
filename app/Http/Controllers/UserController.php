@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\DTO\user\CreateData;
+use App\Http\Requests\User\BirthDaySmsRequest;
 use App\Http\Requests\User\CreateRequest;
 use App\Models\User;
 use App\Services\Contracts\CityServiceInterface;
@@ -42,5 +43,14 @@ class UserController extends Controller
         $this->userService->create(CreateData::fromRequest($request));
 
         return redirect()->route('users.index');
+    }
+
+    public function sendBirthDaySms(BirthDaySmsRequest $request): RedirectResponse
+    {
+        $this->userService->sendBirthdaySmsWithUserIds(
+            $request->array('user_ids'),
+        );
+
+        return redirect()->back()->with('success', 'پیام با موفقیت ارسال شد');
     }
 }

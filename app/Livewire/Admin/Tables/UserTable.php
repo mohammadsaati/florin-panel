@@ -36,18 +36,15 @@ class UserTable extends Component
 
     public function render(): View
     {
-        $users = $this->userService->filter(new UserFilterData(
-            search: $this->search,
-            referralCode: $this->referralCode,
-            user_id: (int)$this->user_id,
-            invited_by: $this->invited_by,
-            page: (int)$this->getPage() ?? 1,
-            per_page: $this->perPage,
-        ));
-
-
         return view('livewire.admin.tables.user-table', [
-            'users' => $users,
+            'users' => $this->userService->filter(new UserFilterData(
+                search: $this->search,
+                referralCode: $this->referralCode,
+                user_id: (int)$this->user_id,
+                invited_by: $this->invited_by,
+                page: (int)$this->getPage() ?? 1,
+                per_page: $this->perPage,
+            )),
         ]);
     }
 }

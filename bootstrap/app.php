@@ -23,6 +23,6 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withSchedule(function (Schedule $schedule): void {
         $schedule->command('user:birthday-sms')
             ->daily()
-            ->at('11:00');
+            ->at('00:01');
     })
     ->create();

@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Collection;
 
 /**
  * @property int $id
@@ -157,5 +158,16 @@ class User extends Authenticatable
         return self::query()
             ->whereDate('birth_date', '=', date('Y-m-d'))
             ->chunk(200, $action);
+    }
+
+    /**
+     * @param int[] $ids
+     * @return Collection<int, User>
+     */
+    public static function getByIds(array $ids): Collection
+    {
+        return self::query()
+            ->whereIn('id', $ids)
+            ->get();
     }
 }

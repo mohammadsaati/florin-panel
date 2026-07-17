@@ -30,6 +30,8 @@ Route::middleware(['auth:admin'])->group(function () {
             Route::get('/edit/{user}', 'edit')->name('edit');
             Route::post('/update/{user}', 'update')->name('update');
             Route::delete('/delete/{user}', 'delete')->name('delete');
+
+            Route::post('birthday-sms', 'sendBirthDaySms')->name('send-birth-day-sms');
         });
 
     Route::prefix('cities')

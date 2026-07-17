@@ -14,10 +14,13 @@ use App\Services\Contracts\UserServiceInterface;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Str;
 
 class UserService implements UserServiceInterface
 {
+    private const string TODAY_BIRTH_DAY_CACHE_KEY = 'today_birth_dates';
+
     public function filter(UserFilterData $filter): Paginator
     {
         return User::filter($filter);
@@ -74,18 +77,58 @@ class UserService implements UserServiceInterface
         return $user;
     }
 
-
     public function checkUsersBirthday(): void
     {
+        Redis::del(self::TODAY_BIRTH_DAY_CACHE_KEY);
+
         User::checkTodayBirthDates(
                 /**
                  * @param Collection<int, User> $users
                  */
             action: function (Collection $users) {
                 $users->each(function (User $user) {
-                   SendBirthDaySmsJob::dispatch($user->first_name, $user->mobile);
+                   Redis::sAdd(self::TODAY_BIRTH_DAY_CACHE_KEY, $user->id);
                 });
             }
         );
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getTodayBirthdays(): Collection
+    {
+
+        $userIds = Redis::sMembers(self::TODAY_BIRTH_DAY_CACHE_KEY);
+
+        return $this->getByIds($userIds);
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function getByIds(array $ids): Collection
+    {
+        return User::getByIds($ids);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function sendBirthdaySmsWithUserIds(array $userIds): void
+    {
+        $users = User::getByIds($userIds);
+
+        $users->chunk(200)->each(
+            /**
+             * @param Collection<int, User> $users
+             */
+            function (Collection $users) {
+                $users->each(fn (User $user) => SendBirthDaySmsJob::dispatch($user->first_name, $user->mobile) );
+            }
+        );
+
+        Redis::del(self::TODAY_BIRTH_DAY_CACHE_KEY);
     }
 }
