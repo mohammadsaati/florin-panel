@@ -96,5 +96,8 @@
 
     </x-data-table>
 
-
+    <x-table.footer
+        :paginator="$users"
+        :per-page="$perPage"
+    />
 </div>

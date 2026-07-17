@@ -7,16 +7,16 @@ use App\DTO\user\CreateData;
 use App\Enums\UserGenderEnum;
 use App\Enums\UserStatusEnum;
 use App\Enums\UserTypeEnum;
+use Carbon\Carbon;
 use Closure;
 use Database\Factories\UserFactory;
-use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Pagination\Paginator;
 
 /**
  * @property int $id
@@ -29,6 +29,8 @@ use Illuminate\Pagination\Paginator;
  * @property UserTypeEnum $type
  * @property UserStatusEnum $status
  * @property string $password
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
  *
  * @method static Builder|User query()
  * @method static Builder|User getByReferralCode(string $referral_code)
@@ -60,6 +62,7 @@ class User extends Authenticatable
     /**
      * @param Builder<User> $query
      * @return Builder<User>
+     * @see getByReferralCode()
      */
     #[Scope]
     public function getByReferralCode(Builder $query, string $referral_code): Builder
@@ -70,6 +73,7 @@ class User extends Authenticatable
     /**
      * @param Builder<User> $query
      * @return Builder<User>
+     * @see ofPhoneNumber()
      */
     #[Scope]
     public function ofPhoneNumber(Builder $query, string $phone): Builder

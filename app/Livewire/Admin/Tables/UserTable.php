@@ -25,8 +25,7 @@ class UserTable extends Component
     #[Url(history: true)]
     public string $invited_by = '';
 
-    public array $perPageOptions = [10, 15, 25, 50, 100];
-    public int $perPage = 20;
+    public int $perPage = 10;
 
     private UserServiceInterface $userService;
 
@@ -37,15 +36,18 @@ class UserTable extends Component
 
     public function render(): View
     {
+        $users = $this->userService->filter(new UserFilterData(
+            search: $this->search,
+            referralCode: $this->referralCode,
+            user_id: (int)$this->user_id,
+            invited_by: $this->invited_by,
+            page: (int)$this->getPage() ?? 1,
+            per_page: $this->perPage,
+        ));
+
+
         return view('livewire.admin.tables.user-table', [
-            'users' => $this->userService->filter(new UserFilterData(
-                search: $this->search,
-                referralCode: $this->referralCode,
-                user_id: (int)$this->user_id,
-                invited_by: $this->invited_by,
-                page: (int)$this->getPage() ?? 1,
-                per_page: $this->perPage,
-            ))
+            'users' => $users,
         ]);
     }
 }

@@ -11,7 +11,7 @@ use App\Jobs\SendWellcomSmsJob;
 use App\Models\User;
 use App\Models\UserAddress;
 use App\Services\Contracts\UserServiceInterface;
-use Illuminate\Pagination\Paginator;
+use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;

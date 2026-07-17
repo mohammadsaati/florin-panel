@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use Exception;
 use Hekmatinasser\Verta\Verta;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -79,6 +80,8 @@ class AppServiceProvider extends ServiceProvider
 
 
         MenuRegistry::register('admin', new AdminMenu());
+
+        Paginator::useTailwind();
     }
 
     private function registerServices(): void
