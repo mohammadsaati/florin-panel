@@ -155,8 +155,11 @@ class User extends Authenticatable
 
     public static function checkTodayBirthDates(Closure $action): bool
     {
+        $today = Carbon::now();
+
         return self::query()
-            ->whereDate('birth_date', '=', date('Y-m-d'))
+            ->whereMonth('birth_date', $today->month)
+            ->whereDay('birth_date', $today->day)
             ->chunk(200, $action);
     }
 
