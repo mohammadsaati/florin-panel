@@ -5,11 +5,21 @@ use App\Http\Controllers\CityController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\SurveyController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
+Route::prefix('survey')
+    ->controller(SurveyController::class)
+    ->as('survey.')
+    ->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::post('/lookup', 'lookup')->name('lookup');
+        Route::post('/submit', 'submit')->name('submit');
+    });
+
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('survey.index');
 });
 
 Route::middleware(['guest'])->group(function () {
@@ -32,6 +42,7 @@ Route::middleware(['auth:admin'])->group(function () {
             Route::delete('/delete/{user}', 'delete')->name('delete');
 
             Route::post('birthday-sms', 'sendBirthDaySms')->name('send-birth-day-sms');
+            Route::get('/survey/{user}', 'survey')->name('survey');
         });
 
     Route::prefix('cities')

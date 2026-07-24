@@ -44,6 +44,14 @@ class Question extends Model
             ->withQueryString();
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection<int, Question>
+     */
+    public static function listWithAnswers(): \Illuminate\Database\Eloquent\Collection
+    {
+        return self::query()->with('answers')->get();
+    }
+
     public static function create(CreateQuestionData $data): Question|null
     {
         try {

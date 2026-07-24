@@ -7,7 +7,9 @@ use App\Commons\Menu\Menus\AdminMenu;
 use App\Services\city\CityService;
 use App\Services\Contracts\CityServiceInterface;
 use App\Services\Contracts\QuestionServiceInterface;
+use App\Services\Contracts\SurveyServiceInterface;
 use App\Services\Contracts\UserServiceInterface;
+use App\Services\survey\SurveyService;
 use App\Services\user\QuestionService;
 use App\Services\user\UserService;
 use Carbon\Carbon;
@@ -89,5 +91,6 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(UserServiceInterface::class, UserService::class);
         $this->app->singleton(CityServiceInterface::class, CityService::class);
         $this->app->singleton(QuestionServiceInterface::class, QuestionService::class);
+        $this->app->singleton(SurveyServiceInterface::class, SurveyService::class);
     }
 }

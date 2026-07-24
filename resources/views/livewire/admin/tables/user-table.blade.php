@@ -80,6 +80,12 @@
                             <i class="ki-filled ki-user-tick"></i>
                             <span>دعوت‌ها</span>
                         </a>
+
+                        <a href="{{ route('users.survey', $user->id) }}"
+                           class="btn btn-outline btn-sm btn-success w-full sm:w-auto justify-center">
+                            <i class="ki-filled ki-questionnaire-tablet"></i>
+                            <span>نظرسنجی</span>
+                        </a>
                     </div>
                 </td>
             </tr>
